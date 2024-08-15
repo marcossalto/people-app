@@ -11,5 +11,5 @@ import com.marcossalto.peopleapp.domain.model.User
     exportSchema = false
 )
 abstract class UserDB: RoomDatabase() {
-    abstract val dao: UserDao
+    abstract fun userDao(): UserDao
 }
