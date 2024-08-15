@@ -1,4 +1,4 @@
-package com.marcossalto.peopleapp
+package com.marcossalto.peopleapp.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
