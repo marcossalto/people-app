@@ -11,5 +11,5 @@ data class User(
     val id: Int? = null,
     val name: String,
     @ColumnInfo(name = "last_name") val lastName: String,
-    val age: String,
+    val age: Int
 )
