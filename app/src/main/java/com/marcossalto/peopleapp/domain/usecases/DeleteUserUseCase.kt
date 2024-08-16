@@ -7,5 +7,5 @@ import javax.inject.Inject
 class DeleteUserUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    operator fun invoke(user: User) = userRepository.deleteUserFromRoom(user)
+    suspend operator fun invoke(user: User) = userRepository.deleteUserFromRoom(user)
 }

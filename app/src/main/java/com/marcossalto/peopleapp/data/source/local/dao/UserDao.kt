@@ -16,23 +16,23 @@ import kotlinx.coroutines.flow.Flow
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addUser(user: User)
+    suspend fun addUser(user: User)
 
     @Update
-    fun updateUser(user: User)
+    suspend fun updateUser(user: User)
 
     @Delete
-    fun deleteUser(user: User)
+    suspend fun deleteUser(user: User)
 
     @Query("SELECT * FROM $USER_TABLE WHERE $USER_ID = :id")
-    fun getUserById(id: Int): User?
+    suspend fun getUserById(id: Int): User?
 
     @Query("SELECT * FROM $USER_TABLE ORDER BY $USER_ID ASC")
     fun getUsers(): Flow<Users>
 
     @Query("DELETE FROM $USER_TABLE WHERE $USER_ID = :id")
-    fun deleteUserById(id: String)
+    suspend fun deleteUserById(id: String)
 
     @Query("DELETE FROM $USER_TABLE")
-    fun deleteAllUsers()
+    suspend fun deleteAllUsers()
 }

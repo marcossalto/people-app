@@ -10,19 +10,19 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val userDao: UserDao
 ): UserRepository {
-    override fun addUserToRoom(user: User) {
+    override suspend fun addUserToRoom(user: User) {
         userDao.addUser(user)
     }
 
-    override fun updateUserFromRoom(user: User) {
+    override suspend fun updateUserFromRoom(user: User) {
         userDao.updateUser(user)
     }
 
-    override fun deleteUserFromRoom(user: User) {
+    override suspend fun deleteUserFromRoom(user: User) {
         userDao.deleteUser(user)
     }
 
-    override fun getUserByIdFromRoom(id: Int): User? {
+    override suspend fun getUserByIdFromRoom(id: Int): User? {
         return userDao.getUserById(id)
     }
 
