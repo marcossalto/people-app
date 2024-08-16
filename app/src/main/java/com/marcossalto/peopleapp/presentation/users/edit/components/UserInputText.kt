@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.marcossalto.peopleapp.R
+import kotlin.reflect.typeOf
 
 @Composable
 fun UserInputText(
@@ -44,11 +45,12 @@ fun UserInputText(
                 lineHeight = 16.sp,
                 letterSpacing = 0.4.sp
             ),
-            color = Color.LightGray
+            color = Color.Black
         )
         BasicTextField(
             modifier = Modifier.baseLineHeight(28.dp),
             value = text,
+            singleLine = true,
             onValueChange = onTextChange,
             textStyle = TextStyle(
                 fontFamily = FontFamily(Font(R.font.sf_pro_text_regular)),

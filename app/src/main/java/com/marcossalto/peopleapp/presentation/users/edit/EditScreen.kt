@@ -21,6 +21,8 @@ fun EditScreen(
     val lastNameState = viewModel.userLastName.value
     val ageState = viewModel.userAge.value
 
+    val enabled = nameState.text.isNotEmpty() && lastNameState.text.isNotEmpty() && ageState.text.isNotEmpty()
+
     LaunchedEffect(key1 = true) {
         viewModel.eventFlow.collectLatest { event ->
             when (event) {
@@ -50,6 +52,7 @@ fun EditScreen(
         },
         bottomBar = {
             EditBottomBar(
+                enabled = enabled,
                 onAddUser = {
                     viewModel.onEvent(EditEvent.AddUser)
                 }
