@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -43,7 +42,8 @@ fun UserItem(
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(
             corner = CornerSize(16.dp)
-        )
+        ),
+        onClick = onEditUser
     ) {
         ConstraintLayout(
             modifier = Modifier
@@ -54,7 +54,7 @@ fun UserItem(
                 .drawBehind { drawRect(color = Color.Transparent) }
 
         ) {
-            val (avatar, name, age, edit, delete) = createRefs()
+            val (avatar, name, age, delete) = createRefs()
             Avatar(
                 user = user,
                 modifier = Modifier
@@ -70,7 +70,7 @@ fun UserItem(
                     .constrainAs(name) {
                         start.linkTo(avatar.end)
                         top.linkTo(avatar.top)
-                        end.linkTo(edit.start)
+                        end.linkTo(delete.start)
                         width = Dimension.fillToConstraints
                     }
                     .padding(8.dp),
@@ -91,19 +91,6 @@ fun UserItem(
                 text = user.age.toString(),
                 style = MaterialTheme.typography.bodyLarge.copy(color = Color.Black)
             )
-            IconButton(
-                modifier = Modifier.constrainAs(edit) {
-                    top.linkTo(parent.top)
-                    bottom.linkTo(parent.bottom)
-                    end.linkTo(delete.start)
-                },
-                onClick = onEditUser
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Edit,
-                    contentDescription = null
-                )
-            }
             IconButton(
                 modifier = Modifier.constrainAs(delete) {
                     top.linkTo(parent.top)
