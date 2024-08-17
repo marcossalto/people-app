@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,7 +23,7 @@ import com.marcossalto.peopleapp.domain.model.User
 fun Avatar(
     user: User,
     modifier: Modifier = Modifier,
-    size: Dp = 60.dp,
+    size: Dp = 56.dp,
     textStyle: TextStyle = MaterialTheme.typography.titleMedium,
 ) {
     Box(

@@ -1,15 +1,12 @@
 package com.marcossalto.peopleapp.presentation.home.components
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -18,12 +15,15 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.marcossalto.peopleapp.domain.model.User
 
 @Composable
@@ -37,60 +37,97 @@ fun UserItem(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                horizontal = 16.dp,
-                vertical = 12.dp
+                horizontal = 8.dp,
+                vertical = 8.dp
             ),
         elevation = CardDefaults.cardElevation(4.dp),
         shape = RoundedCornerShape(
             corner = CornerSize(16.dp)
         )
     ) {
-        Row(
+        ConstraintLayout(
             modifier = Modifier
+                .wrapContentHeight()
+                .wrapContentSize()
                 .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
+                .padding(8.dp)
+                .drawBehind { drawRect(color = Color.Transparent) }
+
         ) {
+            val (avatar, name, age, edit, delete) = createRefs()
             Avatar(
-                user = user
-            )
-            Column(
+                user = user,
                 modifier = Modifier
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.Center
+                    .constrainAs(avatar) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                    }
+                    .padding(8.dp)
+            )
+
+            BasicText(
+                modifier = Modifier
+                    .constrainAs(name) {
+                        start.linkTo(avatar.end)
+                        top.linkTo(avatar.top)
+                        end.linkTo(edit.start)
+                        width = Dimension.fillToConstraints
+                    }
+                    .padding(8.dp),
+                text = "${user.name}, ${user.lastName}",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.headlineSmall
+            )
+
+            BasicText(
+                modifier = Modifier
+                    .constrainAs(age) {
+                        start.linkTo(name.start)
+                        top.linkTo(name.bottom)
+
+                    }
+                    .padding(start = 8.dp, bottom = 8.dp),
+                text = user.age.toString(),
+                style = MaterialTheme.typography.bodyLarge.copy(color = Color.Black)
+            )
+            IconButton(
+                modifier = Modifier.constrainAs(edit) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(delete.start)
+                },
+                onClick = onEditUser
             ) {
-                Text(
-                    text = "${user.name}, ${user.lastName}",
-                    style = MaterialTheme.typography.headlineSmall,
-                )
-                Spacer(
-                    modifier = Modifier
-                        .height(4.dp)
-                )
-                Text(
-                    text = user.age.toString(),
-                    style = MaterialTheme.typography.bodyMedium.copy(color = Color.DarkGray)
+                Icon(
+                    imageVector = Icons.Filled.Edit,
+                    contentDescription = null
                 )
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxHeight(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
+            IconButton(
+                modifier = Modifier.constrainAs(delete) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(parent.end)
+                },
+                onClick = onDeleteUser
             ) {
-                IconButton(onClick = onEditUser) {
-                    Icon(
-                        imageVector = Icons.Filled.Edit,
-                        contentDescription = null
-                    )
-                }
-                IconButton(onClick = onDeleteUser) {
-                    Icon(
-                        imageVector = Icons.Filled.Delete,
-                        contentDescription = null
-                    )
-                }
+                Icon(
+                    imageVector = Icons.Filled.Delete,
+                    contentDescription = null
+                )
             }
         }
     }
+}
+
+@Composable
+@Preview
+fun UserItemPreview() {
+    UserItem(
+        modifier = Modifier,
+        user = User(id = 1, name = "John", lastName = "Doe", age = 30),
+        onEditUser = {},
+        onDeleteUser = {}
+    )
 }

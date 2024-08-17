@@ -1,6 +1,7 @@
 [versions]
 activityCompose = "1.9.1"
 agp = "8.5.2"
+constraintlayoutCompose = "1.0.1"
 coreKtx = "1.13.1"
 composeBom = "2024.06.00"
 composePlugin = "1.6.11"
@@ -16,6 +17,7 @@ roomRuntime = "2.6.1"
 
 [libraries]
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
+androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
