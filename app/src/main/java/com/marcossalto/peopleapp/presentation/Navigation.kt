@@ -34,7 +34,10 @@ fun Navigation() {
             )
         ) {
             EditScreen(
-                navController = navController
+                navController = navController,
+                navigateBack = {
+                    navController.popBackStack()
+                }
             )
         }
     }

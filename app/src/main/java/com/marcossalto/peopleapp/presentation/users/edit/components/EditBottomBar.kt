@@ -19,6 +19,7 @@ import com.marcossalto.peopleapp.R
 @Composable
 fun EditBottomBar(
     modifier: Modifier = Modifier,
+    textButton: String,
     enabled: Boolean = false,
     onAddUser: () -> Unit
 ) {
@@ -36,7 +37,7 @@ fun EditBottomBar(
         enabled = enabled
     ) {
         Text(
-            text = stringResource(id = R.string.add_user)
+            text = textButton
         )
     }
 }

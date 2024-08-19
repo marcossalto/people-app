@@ -16,10 +16,23 @@ import kotlinx.coroutines.flow.collectLatest
 fun EditScreen(
     navController: NavHostController,
     viewModel: EditViewModel = hiltViewModel(),
+    navigateBack: () -> Unit
 ) {
     val nameState = viewModel.userName.value
     val lastNameState = viewModel.userLastName.value
     val ageState = viewModel.userAge.value
+
+    val title = if (viewModel.currentUserId == null) {
+        stringResource(id = R.string.add_user)
+    } else {
+        stringResource(id = R.string.update_user)
+    }
+
+    val textButton = if (viewModel.currentUserId == null) {
+        stringResource(id = R.string.add)
+    } else {
+        stringResource(id = R.string.update)
+    }
 
     val enabled = nameState.text.isNotEmpty() && lastNameState.text.isNotEmpty() && ageState.text.isNotEmpty()
 
@@ -36,7 +49,8 @@ fun EditScreen(
     Scaffold(
         topBar = {
             EditTopBar(
-                topAppBarText = stringResource(id = R.string.add_user)
+                topAppBarText = title,
+                navigateBack = navigateBack
             )
         },
         content = { padding ->
@@ -52,6 +66,7 @@ fun EditScreen(
         },
         bottomBar = {
             EditBottomBar(
+                textButton = textButton,
                 enabled = enabled,
                 onAddUser = {
                     viewModel.onEvent(EditEvent.AddUser)
